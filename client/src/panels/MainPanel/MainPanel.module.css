@@ -1,0 +1,15 @@
+.container {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    min-width: 100vw;
+    min-height: 100vh;
+
+
+    font-family: Helvetica, serif;
+
+    background-color: #b4e8ee;
+}

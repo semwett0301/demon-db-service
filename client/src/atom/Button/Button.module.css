@@ -1,0 +1,13 @@
+.button {
+  background-color: yellow;
+  border: 0;
+  border-radius: 10px;
+}
+
+.button:hover {
+  box-shadow: 3px 3px 3px rgb(0 0 0 / 20%);
+}
+
+.button:active {
+  box-shadow: 5px 5px 5px rgb(0 0 0 / 20%);
+}
