@@ -27,7 +27,7 @@ public class Distributor {
     private Integer id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "distribution_committee_id")
     private DistributionCommittee distributionCommittee;
 
@@ -37,7 +37,8 @@ public class Distributor {
     @Enumerated
     private Mood mood;
 
-    @OneToMany(mappedBy = "distributor")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "distributor_id")
     private Set<DistributorSkill> distributorSkills = new LinkedHashSet<>();
 
 }

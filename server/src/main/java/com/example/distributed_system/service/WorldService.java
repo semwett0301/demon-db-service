@@ -2,13 +2,13 @@ package com.example.distributed_system.service;
 
 import com.example.distributed_system.dto.WorldResp;
 import com.example.distributed_system.entity.*;
-import com.example.distributed_system.exceptions.GameOverException;
 import com.example.distributed_system.repository.WorldRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.lang.Math.min;
 
@@ -59,13 +59,27 @@ public class WorldService {
         World world = worldRepository.findById(worldId).orElseThrow();
         peopleRoutine(world);
         peopleToDistributionLayer(world);
-        gameOverCheck(world);
+        boolean gameOver = gameOverCheck(world);
         humanToDemon(world);
         demonToHuman(world);
-        distributeHuman(world);
+        if (gameOver) evilDistribute(world);
+        else distributeHuman(world);
         burnNewHuman(world);
         worldRepository.save(world);
 
+    }
+
+    private void evilDistribute(World world) {
+        var hell = world.getHell();
+        var distributionLayer = world.getDistributionLayer();
+        for (Human human : distributionLayer.getHumans()) {
+            human.setHell(hell);
+            human.setDistributionLayer(null);
+            if (!hell.getDemons().isEmpty()) {
+                Demon demon1 = hell.getDemons().stream().min(Comparator.comparing(demon -> demon.getDemonHumen().size())).get();
+                demon1.getDemonHumen().add(human);
+            }
+        }
     }
 
     private void peopleRoutine(World world) {
@@ -87,20 +101,20 @@ public class WorldService {
         });
     }
 
-    private void gameOverCheck(World world) {
+    private boolean gameOverCheck(World world) {
 
         var distributionLayer = world.getDistributionLayer();
         var hell = world.getHell();
 
         var totalRequiredScreams = distributionLayer.getDistributionCommittees().stream().mapToInt(distributionCommittee -> distributionCommittee.getDistributors().stream().mapToInt(distributor -> distributor.getDistributorSkills().stream().mapToInt(DistributorSkill::getRequiredScreams).sum()).sum()).sum();
+        distributionLayer.setScreamsCount(totalRequiredScreams);
 
-        var hellProducedScreams = hell.getDemons().stream().mapToLong(demon -> demon.getDemonDemonSpecialisations().stream().mapToInt(d -> d.getPower() * demon.getDemonHumen().size()).sum()).sum();
+        var hellProducedScreams = hell.getDemons().stream().
+                mapToLong(demon -> demon.getDemonDemonSpecialisations().stream().mapToInt(d -> d.getPower() * demon.getDemonHumen().size()).sum()).sum();
         hell.setProducedScreams(hellProducedScreams);
 
         var totalScreams = distributionLayer.getScreamsCount() + hell.getProducedScreams();
-        if (totalScreams < totalRequiredScreams) {
-            throw new GameOverException();
-        }
+        return totalScreams < totalRequiredScreams;
     }
 
     private void humanToDemon(World world) {
@@ -108,14 +122,14 @@ public class WorldService {
 
         hell.getHumans().forEach(human -> {
             long sum = human.getDemonHumen().stream().mapToLong(demon -> demon.getDemonDemonSpecialisations().stream().mapToLong(DemonSpecialisation::getPower).sum()).sum();
-            human.setNumberOfRighteousDeeds((int) (human.getNumberOfRighteousDeeds() - sum));
+            human.setNumberOfRighteousDeeds((int) (human.getNumberOfRighteousDeeds() - sum-5));
             if (human.getNumberOfRighteousDeeds() <= 0) {
                 Demon generate = demonGenerator.generate(human, hell);
                 hell.getDemons().add(generate);
                 human.setDemonHumen(new HashSet<>());
-                world.getHell().getHumans().remove(human);
             }
         });
+        hell.getHumans().stream().filter(human -> human.getNumberOfRighteousDeeds() <= 0).collect(Collectors.toList()).forEach(hell.getHumans()::remove);
     }
 
     private void demonToHuman(World world) {
@@ -124,9 +138,9 @@ public class WorldService {
         var hellDemons = hell.getDemons();
 
         hellDemons.forEach(demon -> demon.setAgesLeftInHell(demon.getAgesLeftInHell() - 1));
-        List<Demon> demonsToHumanList = hellDemons.stream().filter(demon -> demon.getAgesLeftInHell() <= 0).toList();
+        List<Demon> demonsToHumanList = hellDemons.stream().filter(demon -> demon.getAgesLeftInHell() <= 0).collect(Collectors.toList());
         demonsToHumanList.forEach(Demon::clearRelations);
-        hellDemons.removeAll(demonsToHumanList);
+        demonsToHumanList.forEach(hellDemons::remove);
         Set<Human> newPeople = humanGenerator.generate(demonsToHumanList.size(), world);
         realWorld.getHumans().addAll(newPeople);
     }
@@ -158,7 +172,8 @@ public class WorldService {
             if (human.getAge() > ageOfConsent) {
                 if (human.getSex() == Sex.FEMALE) {
                     femaleCount++;
-                } else {
+                }
+                if (human.getSex() == Sex.MALE) {
                     maleCount++;
                 }
             }
