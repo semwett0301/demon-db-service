@@ -1,0 +1,16 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+
+    margin-bottom: 3%;
+
+}
+
+.world {
+    height: 180px;
+    width: 270px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
