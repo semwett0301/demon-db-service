@@ -16,5 +16,5 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class RealWorldDto implements Serializable {
-    private  Set<HumanDto> humans;
+    private Set<HumanDto> humans;
 }
