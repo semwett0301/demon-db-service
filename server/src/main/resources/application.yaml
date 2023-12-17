@@ -1,0 +1,16 @@
+server:
+  port: 7000
+
+spring:
+  datasource:
+    username: admin
+    password: admin
+    url: jdbc:postgresql://localhost:5432/destructed_system
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

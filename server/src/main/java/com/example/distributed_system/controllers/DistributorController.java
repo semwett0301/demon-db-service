@@ -1,26 +1,25 @@
 package com.example.distributed_system.controllers;
 
 
-import com.example.distributed_system.entity.Distributor;
-import com.example.distributed_system.service.DistributorService;
+import com.example.distributed_system.dto.DistributorCreateDto;
+import com.example.distributed_system.interfaces.DistributorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/distributor")
+@RequestMapping("/distributors")
 public class DistributorController {
     @Autowired
     private DistributorService distributorService;
 
-    @PostMapping("/{worldId}")
-    public void addDistributor(@RequestBody Distributor distributor, @PathVariable Integer worldId) {
-        distributorService.addDistributor(worldId, distributor);
+    @PostMapping("")
+    public void addDistributor(@RequestBody DistributorCreateDto distributorDto) {
+        distributorService.addDistributor(distributorDto);
     }
 
-    @DeleteMapping("/{distributorID}")
-    public void deleteDistributor(@PathVariable Integer distributorID) {
-        distributorService.deleteDistributor(distributorID);
-
+    @DeleteMapping("/{id}")
+    public void deleteDistributor(@PathVariable Integer id) {
+        distributorService.deleteDistributor(id);
     }
 
 }

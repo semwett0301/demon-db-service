@@ -1,7 +1,7 @@
 import { request } from "api";
 import { Button, DistibutionCommittee } from "atom";
 import { Context } from "context";
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useMemo } from "react";
 import { Mood } from "types";
 
 import { DistributionCommitteeResponse } from "../../types/DistributionCommitteeResponse";
@@ -15,6 +15,11 @@ interface Props {
 export const DistributionLayer: FC<Props> = ({ committees, humansAmount }) => {
   const context = useContext(Context);
 
+  const finalCommittiees = useMemo(
+    () => committees?.sort((c1, c2) => c1.id - c2.id),
+    [committees]
+  );
+
   return (
     <div className={cl.wrapper}>
       <div className={cl.create}>
@@ -23,18 +28,18 @@ export const DistributionLayer: FC<Props> = ({ committees, humansAmount }) => {
           width="20%"
           height={40}
           requestFunction={async () => {
-            await request
-              .createDist(context.worldId, {
-                age: 23,
-                distributorSkills: [
-                  {
-                    name: "Крутой скилл",
-                    requiredScreams: 3000,
-                  },
-                ],
-                mood: Mood.GOOD,
-              })
-              .then(() => context.getCurrentWorld());
+            await request.createDist({
+              age: 23,
+              distributorSkills: [
+                {
+                  name: "Крутой скилл",
+                  requiredScreams: 3000,
+                },
+              ],
+              mood: Mood.GOOD,
+              worldId: context.worldId,
+            });
+            context.getCurrentWorld();
           }}
         >
           <b>Создать</b>
@@ -42,7 +47,7 @@ export const DistributionLayer: FC<Props> = ({ committees, humansAmount }) => {
       </div>
 
       <div className={cl.com}>
-        {committees?.map((com) => (
+        {finalCommittiees?.map((com) => (
           <>
             {com?.distributors.length > 0 && (
               <div className={cl.comEl}>

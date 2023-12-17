@@ -41,6 +41,7 @@ export const WorldInfo: FC<Props> = ({ hell, real }) => {
       value: hell?.demons?.length,
     },
   ];
+
   return (
     <div className={cl.wrapper}>
       <div className={cl.world}>

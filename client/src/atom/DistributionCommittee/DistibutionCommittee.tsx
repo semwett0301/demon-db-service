@@ -1,7 +1,7 @@
 import { request } from "api";
 import { Button } from "atom";
 import { Context } from "context";
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useMemo } from "react";
 import { DistributorResponse } from "types";
 
 import cl from "./DistributionCommittee.module.css";
@@ -13,9 +13,27 @@ interface Props {
 export const DistibutionCommittee: FC<Props> = ({ distributors }) => {
   const context = useContext(Context);
 
+  const resultDistributors = useMemo(
+    () =>
+      distributors.sort((a, b) => {
+        const aLen = a?.distributorSkills?.reduce(
+          (acc, elem) => acc + elem.requiredScreams,
+          0
+        );
+
+        const bLen = b?.distributorSkills?.reduce(
+          (acc, elem) => acc + elem.requiredScreams,
+          0
+        );
+
+        return bLen - aLen;
+      }),
+    [distributors]
+  );
+
   return (
     <div className={cl.wrapper}>
-      {distributors?.map((e) => (
+      {resultDistributors?.map((e) => (
         <div className={cl.com} key={e?.id}>
           <Button
             height={15}

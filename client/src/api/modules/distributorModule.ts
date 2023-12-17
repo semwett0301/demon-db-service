@@ -2,14 +2,14 @@ import { AxiosInstance } from "axios";
 import { DistributorResponse, DistributorSkillResponse } from "types";
 
 export function deleteDistributor(instance: AxiosInstance) {
-  return (distId: number) => instance.delete(`/distributor/${distId}`);
+  return (distId: number) => instance.delete(`/distributors/${distId}`);
 }
 
 export function createDistributor(instance: AxiosInstance) {
   return (
-    worldId: number,
     newDist: Omit<DistributorResponse, "id" | "distributorSkills"> & {
+      worldId: number;
       distributorSkills: Omit<DistributorSkillResponse, "id">[];
     }
-  ) => instance.post(`/distributor/${worldId}`, newDist);
+  ) => instance.post(`/distributors`, newDist);
 }
