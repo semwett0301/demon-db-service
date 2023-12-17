@@ -2,6 +2,7 @@ package com.example.distributed_system.service;
 
 import com.example.distributed_system.dto.WorldResp;
 import com.example.distributed_system.entity.*;
+import com.example.distributed_system.interfaces.WorldService;
 import com.example.distributed_system.repository.WorldRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -14,26 +15,29 @@ import static java.lang.Math.min;
 
 @Service
 @Transactional
-public class WorldService {
+public class WorldServiceImpl implements WorldService {
 
     private final WorldRepository worldRepository;
 
     private final ModelMapper modelMapper;
-    private final DemonGenerator demonGenerator;
-    private final HumanGenerator humanGenerator;
+    private final DemonGeneratorServiceImpl demonGenerator;
+    private final HumanGeneratorServiceImpl humanGenerator;
 
-    public WorldService(WorldRepository worldRepository, ModelMapper modelMapper, DemonGenerator demonGenerator, HumanGenerator humanGenerator) {
+    public WorldServiceImpl(WorldRepository worldRepository, ModelMapper modelMapper, DemonGeneratorServiceImpl demonGenerator, HumanGeneratorServiceImpl humanGenerator) {
         this.worldRepository = worldRepository;
         this.modelMapper = modelMapper;
         this.demonGenerator = demonGenerator;
         this.humanGenerator = humanGenerator;
     }
 
+    @Override
     public WorldResp findWorldById(Integer id) {
         World world = worldRepository.findById(id).orElseThrow();
+
         return modelMapper.map(world, WorldResp.class);
     }
 
+    @Override
     public void genocideStart(Integer worldId) {
         World world = worldRepository.findById(worldId).orElseThrow();
         world.getRealWorld().getHumans().forEach(human -> {
@@ -43,6 +47,7 @@ public class WorldService {
         worldRepository.save(world);
     }
 
+    @Override
     public void amnestyStart(Integer worldID) {
         World world = worldRepository.findById(worldID).orElseThrow();
         var hell = world.getHell();
@@ -55,6 +60,7 @@ public class WorldService {
         worldRepository.save(world);
     }
 
+    @Override
     public void nextYear(Integer worldId) {
         World world = worldRepository.findById(worldId).orElseThrow();
         peopleRoutine(world);
@@ -110,7 +116,7 @@ public class WorldService {
         distributionLayer.setScreamsCount(totalRequiredScreams);
 
         var hellProducedScreams = hell.getDemons().stream().
-                mapToLong(demon -> demon.getDemonDemonSpecialisations().stream().mapToInt(d -> d.getPower() * demon.getDemonHumen().size()).sum()).sum();
+                mapToLong(Demon::getPower).sum();
         hell.setProducedScreams(hellProducedScreams);
 
         var totalScreams = distributionLayer.getScreamsCount() + hell.getProducedScreams();
@@ -121,8 +127,8 @@ public class WorldService {
         var hell = world.getHell();
 
         hell.getHumans().forEach(human -> {
-            long sum = human.getDemonHumen().stream().mapToLong(demon -> demon.getDemonDemonSpecialisations().stream().mapToLong(DemonSpecialisation::getPower).sum()).sum();
-            human.setNumberOfRighteousDeeds((int) (human.getNumberOfRighteousDeeds() - sum-5));
+            long sum = human.getDemonHumen().stream().mapToLong(Demon::getPower).sum();
+            human.setNumberOfRighteousDeeds((int) (human.getNumberOfRighteousDeeds() - sum - 5));
             if (human.getNumberOfRighteousDeeds() <= 0) {
                 Demon generate = demonGenerator.generate(human, hell);
                 hell.getDemons().add(generate);

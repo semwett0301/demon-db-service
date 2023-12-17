@@ -19,17 +19,9 @@ INSERT INTO distributor_skill (distributor_id, name, required_screams)
 VALUES (1, 'ОСИ', 777),
        (1, 'ОПД', 1),
        (2, 'ВЕБ', 13);
-INSERT INTO demon (hell_id, ages_left_in_hell)
-VALUES (1, 666),
-       (1, 777);
-INSERT INTO demon_specialisation (name, power)
-VALUES ('СПРОСИТЬ МОДЕЛЬ ОСИ', 7),
-       ('ОТЦЕНТРОВАТЬ ДИВ', 10),
-       ('МИКРО ИНФАРКТ', 99);
-INSERT INTO demon_demon_specialisation
-VALUES (1, 1),
-       (2, 1),
-       (3, 2);
+INSERT INTO demon (hell_id, power, ages_left_in_hell)
+VALUES (1, 300, 666),
+       (1, 400, 777);
 INSERT INTO human (real_world_id, distribution_layer_id, hell_id, age, name, last_name, nationality,
                    number_of_good_deeds, number_of_righteous_deeds, sex)
 VALUES (1, null, null, 20, 'Dima', 'Antonov', 'я русский', 1, 100, 1),

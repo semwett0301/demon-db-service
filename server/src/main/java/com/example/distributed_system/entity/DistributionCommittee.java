@@ -6,7 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -37,6 +39,6 @@ public class DistributionCommittee {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "distribution_committee_id")
-    private Set<Distributor> distributors = new LinkedHashSet<>();
+    private List<Distributor> distributors = new ArrayList<>();
 
 }

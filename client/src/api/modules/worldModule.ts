@@ -6,17 +6,17 @@ export function getWorldId(instance: AxiosInstance) {
 }
 
 export function getWorld(instance: AxiosInstance) {
-  return (id: number) => instance.get<WorldResponse>(`/world/${id}`);
+  return (id: number) => instance.get<WorldResponse>(`/worlds/${id}`);
 }
 
 export function nextYear(instance: AxiosInstance) {
-  return (id: number) => instance.get(`/world/${id}/nextYear`);
+  return (id: number) => instance.post(`/worlds/${id}/nextYear`);
 }
 
 export function genocide(instance: AxiosInstance) {
-  return (id: number) => instance.get(`/world/${id}/genocide`);
+  return (id: number) => instance.post(`/worlds/${id}/genocide`);
 }
 
 export function amnesty(instance: AxiosInstance) {
-  return (id: number) => instance.get(`/world/${id}/amnesty`);
+  return (id: number) => instance.post(`/worlds/${id}/amnesty`);
 }

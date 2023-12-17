@@ -23,18 +23,18 @@ export const DistributionLayer: FC<Props> = ({ committees, humansAmount }) => {
           width="20%"
           height={40}
           requestFunction={async () => {
-            await request
-              .createDist(context.worldId, {
-                age: 23,
-                distributorSkills: [
-                  {
-                    name: "Крутой скилл",
-                    requiredScreams: 3000,
-                  },
-                ],
-                mood: Mood.GOOD,
-              })
-              .then(() => context.getCurrentWorld());
+            await request.createDist({
+              age: 23,
+              distributorSkills: [
+                {
+                  name: "Крутой скилл",
+                  requiredScreams: 3000,
+                },
+              ],
+              mood: Mood.GOOD,
+              worldId: context.worldId,
+            });
+            context.getCurrentWorld();
           }}
         >
           <b>Создать</b>

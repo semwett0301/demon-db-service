@@ -74,23 +74,10 @@ CREATE TABLE IF NOT EXISTS demon
 (
     id                SERIAL PRIMARY KEY NOT NULL,
     hell_id           INT REFERENCES hell,
+    power             INT,
     ages_left_in_hell NUMERIC
-        CONSTRAINT positive_ages_left_in_hell check ( ages_left_in_hell > 0 )
-);
-
-CREATE TABLE IF NOT EXISTS demon_specialisation
-(
-    id    SERIAL PRIMARY KEY NOT NULL,
-    name  VARCHAR,
-    power NUMERIC
-        CONSTRAINT positive_power check ( power > 0 )
-);
-CREATE TABLE IF NOT EXISTS demon_demon_specialisation
-(
-    demon_specialisation INT REFERENCES demon_specialisation,
-    demon_id             INt REFERENCES demon
-);
-
+    CONSTRAINT positive_ages_left_in_hell check ( ages_left_in_hell > 0 )
+ );
 
 CREATE TABLE IF NOT EXISTS demon_human
 (
