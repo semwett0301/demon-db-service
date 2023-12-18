@@ -7,4 +7,5 @@ interface Props {
   worldId?: number;
 }
 
+// Инициализация контекста
 export const Context = createContext<Props>({});

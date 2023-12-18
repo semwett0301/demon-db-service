@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
-
+// Конфигурация CORS
 @Component
 @Order(HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {

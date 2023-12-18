@@ -1,3 +1,5 @@
+// Модуль взаимодействия с API /worlds
+
 import { AxiosInstance } from "axios";
 import { WorldResponse } from "types";
 

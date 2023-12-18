@@ -1,8 +1,8 @@
 import { request } from "api";
 import { Button, DistibutionCommittee } from "atom";
 import { Context } from "context";
-import React, { FC, useContext, useMemo } from "react";
-import { Mood } from "types";
+import React, { FC, useCallback, useContext, useMemo } from "react";
+import { DistributorResponse, Mood } from "types";
 
 import { DistributionCommitteeResponse } from "../../types/DistributionCommitteeResponse";
 import cl from "./DistributionLayer.module.css";
@@ -12,8 +12,27 @@ interface Props {
   humansAmount: number;
 }
 
+// Основной блок приложения, не использует API
 export const DistributionLayer: FC<Props> = ({ committees, humansAmount }) => {
   const context = useContext(Context);
+
+  const resultDistributors = useCallback(
+    (distributors: DistributorResponse[]) =>
+      distributors.sort((a, b) => {
+        const aLen = a?.distributorSkills?.reduce(
+          (acc, elem) => acc + elem.requiredScreams,
+          0
+        );
+
+        const bLen = b?.distributorSkills?.reduce(
+          (acc, elem) => acc + elem.requiredScreams,
+          0
+        );
+
+        return bLen - aLen;
+      }),
+    []
+  );
 
   const finalCommittiees = useMemo(
     () => committees?.sort((c1, c2) => c1.id - c2.id),
@@ -54,7 +73,12 @@ export const DistributionLayer: FC<Props> = ({ committees, humansAmount }) => {
                 <h2>Комитет: {com?.id}</h2>
                 <DistibutionCommittee
                   key={com.id}
-                  distributors={com?.distributors}
+                  distributors={resultDistributors(com?.distributors)}
+                  requestFunction={async (disId) => {
+                    await request.deleteDist(disId).then(() => {
+                      context.getCurrentWorld();
+                    });
+                  }}
                 />
               </div>
             )}

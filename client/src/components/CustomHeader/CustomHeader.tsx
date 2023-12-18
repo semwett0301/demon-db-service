@@ -10,6 +10,7 @@ interface Props {
   requestFunction: () => void;
 }
 
+// Хедер приложения
 export const CustomHeader: FC<Props> = ({
   negative,
   positive,

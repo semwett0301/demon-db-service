@@ -1,3 +1,5 @@
+import "./styles/global.css";
+
 import { request } from "api";
 import { MainPanel } from "panels";
 import React, { useCallback, useLayoutEffect, useMemo, useState } from "react";

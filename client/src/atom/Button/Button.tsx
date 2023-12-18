@@ -2,13 +2,13 @@ import React, { FC, PropsWithChildren } from "react";
 
 import cl from "./Button.module.css";
 
-interface Props {
+export interface ButtonProps {
   height?: number | string;
   width?: number | string;
   requestFunction?: () => void;
 }
 
-export const Button: FC<PropsWithChildren<Props>> = ({
+export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   children,
   height,
   requestFunction,

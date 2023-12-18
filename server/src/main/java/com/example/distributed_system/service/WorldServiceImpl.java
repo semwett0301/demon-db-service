@@ -70,11 +70,12 @@ public class WorldServiceImpl implements WorldService {
         demonToHuman(world);
         if (gameOver) evilDistribute(world);
         else distributeHuman(world);
-        burnNewHuman(world);
+        bornNewHuman(world);
         worldRepository.save(world);
 
     }
 
+    // Перевод людей в чертов
     private void evilDistribute(World world) {
         var hell = world.getHell();
         var distributionLayer = world.getDistributionLayer();
@@ -88,6 +89,7 @@ public class WorldServiceImpl implements WorldService {
         }
     }
 
+    // Размножение людей
     private void peopleRoutine(World world) {
         world.getRealWorld().getHumans().forEach(human -> {
             human.setAge(human.getAge() + 1);
@@ -96,6 +98,7 @@ public class WorldServiceImpl implements WorldService {
         });
     }
 
+    // Перевод людей в распределительный слой
     private void peopleToDistributionLayer(World world) {
         RealWorld realWorld = world.getRealWorld();
         DistributionLayer distributionLayer = world.getDistributionLayer();
@@ -107,6 +110,7 @@ public class WorldServiceImpl implements WorldService {
         });
     }
 
+    // Проверка на превышение потребляемых криков вырабатываемыми
     private boolean gameOverCheck(World world) {
 
         var distributionLayer = world.getDistributionLayer();
@@ -123,6 +127,7 @@ public class WorldServiceImpl implements WorldService {
         return totalScreams < totalRequiredScreams;
     }
 
+    // Превратить человека в демона
     private void humanToDemon(World world) {
         var hell = world.getHell();
 
@@ -138,6 +143,7 @@ public class WorldServiceImpl implements WorldService {
         hell.getHumans().stream().filter(human -> human.getNumberOfRighteousDeeds() <= 0).collect(Collectors.toList()).forEach(hell.getHumans()::remove);
     }
 
+    // Превратить демона в человека
     private void demonToHuman(World world) {
         var hell = world.getHell();
         var realWorld = world.getRealWorld();
@@ -151,6 +157,7 @@ public class WorldServiceImpl implements WorldService {
         realWorld.getHumans().addAll(newPeople);
     }
 
+    // Перераспределить людей
     private void distributeHuman(World world) {
         var hell = world.getHell();
         var distributionLayer = world.getDistributionLayer();
@@ -170,7 +177,8 @@ public class WorldServiceImpl implements WorldService {
         }
     }
 
-    private void burnNewHuman(World world) {
+    // Создание нового человека
+    private void bornNewHuman(World world) {
         var realWorld = world.getRealWorld();
         int femaleCount = 0, maleCount = 0;
         int ageOfConsent = 18;

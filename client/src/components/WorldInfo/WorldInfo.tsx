@@ -11,6 +11,7 @@ interface Props {
   real: RealWorldResponse;
 }
 
+// Футер приложения
 export const WorldInfo: FC<Props> = ({ hell, real }) => {
   const context = useContext(Context);
 

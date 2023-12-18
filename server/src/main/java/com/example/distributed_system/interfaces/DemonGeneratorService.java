@@ -5,5 +5,6 @@ import com.example.distributed_system.entity.Hell;
 import com.example.distributed_system.entity.Human;
 
 public interface DemonGeneratorService {
+    // Генерирование нового демона
     Demon generate(Human human,  Hell hell);
 }
