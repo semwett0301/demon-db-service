@@ -1,3 +1,5 @@
+// Модуль взаимодействия с API /distributors
+
 import { AxiosInstance } from "axios";
 import { DistributorResponse, DistributorSkillResponse } from "types";
 

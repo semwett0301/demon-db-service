@@ -5,6 +5,7 @@ import React, { useContext } from "react";
 
 import styles from "./MainPanel.module.css";
 
+// Главная страница -- все взаимодействие с API через контекст или тут
 export const MainPanel = () => {
   const { getCurrentWorld, world, worldId } = useContext(Context);
 

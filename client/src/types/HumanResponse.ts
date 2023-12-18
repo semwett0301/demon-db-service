@@ -1,5 +1,6 @@
 import { Sex } from "./Sex";
 
+// DTO человека
 export interface HumanResponse {
   name: string;
   lastName: string;

@@ -1,46 +1,26 @@
-import { request } from "api";
-import { Button } from "atom";
-import { Context } from "context";
-import React, { FC, useContext, useMemo } from "react";
+import React, { FC } from "react";
 import { DistributorResponse } from "types";
 
+import { Button } from "../Button";
 import cl from "./DistributionCommittee.module.css";
 
 interface Props {
   distributors: DistributorResponse[];
+  requestFunction?: (disId: number) => Promise<void> | void;
 }
 
-export const DistibutionCommittee: FC<Props> = ({ distributors }) => {
-  const context = useContext(Context);
-
-  const resultDistributors = useMemo(
-    () =>
-      distributors.sort((a, b) => {
-        const aLen = a?.distributorSkills?.reduce(
-          (acc, elem) => acc + elem.requiredScreams,
-          0
-        );
-
-        const bLen = b?.distributorSkills?.reduce(
-          (acc, elem) => acc + elem.requiredScreams,
-          0
-        );
-
-        return bLen - aLen;
-      }),
-    [distributors]
-  );
-
+export const DistibutionCommittee: FC<Props> = ({
+  distributors,
+  requestFunction,
+}) => {
   return (
     <div className={cl.wrapper}>
-      {resultDistributors?.map((e) => (
+      {distributors?.map((e) => (
         <div className={cl.com} key={e?.id}>
           <Button
             height={15}
-            requestFunction={async () => {
-              await request.deleteDist(e.id).then(() => {
-                context.getCurrentWorld();
-              });
+            requestFunction={() => {
+              if (requestFunction) requestFunction(e?.id);
             }}
           >
             Удалить

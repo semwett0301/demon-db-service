@@ -6,5 +6,6 @@ import com.example.distributed_system.entity.World;
 import java.util.Set;
 
 public interface HumanGeneratorService {
+    // Генерирование людей
     Set<Human> generate(int count, World world);
 }

@@ -11,6 +11,7 @@ import {
   nextYear,
 } from "./modules/worldModule";
 
+// Сборка API
 export const request = {
   amnesty: amnesty(instance),
   createDist: createDistributor(instance),
