@@ -1,39 +1,39 @@
-# Клиентская часть приложения 
+# Client-side Application
 
-## Структура проекта
-1. ***components*** - умные компоненты (составлены из атомарных)
-2. ***panels*** - страницы приложения
-3. ***atom*** - атомарные компоненты
-4. ***api*** - взаимодействие с API серверной части
-5. ***types*** - типы для API и внутри приложения
-6. ***context*** - контекст React приложения
-7. ***styles*** - глобальные стили
+## Project Structure
+1. ***components*** - Smart components (composed of atomic ones)
+2. ***panels*** - Application pages
+3. ***atom*** - Atomic components
+4. ***api*** - Interaction with server-side API
+5. ***types*** - Types for API and internal application
+6. ***context*** - React application context
+7. ***styles*** - Global styles
 
-В App.tsx подключаются глобальные стили и инициализируется контекст
+In App.tsx, global styles are connected and context is initialized
 
-## Настройка линтеров для WebStorm
-1. Установите зависимости через ```npm i```
-2. Зайдите во вкладку настроек Eslint и включите следующую конфигурацию:\
+## Linter Configuration for WebStorm
+1. Install dependencies via ```npm i```
+2. Go to Eslint settings tab and enable the following configuration:\
 ![](../img/eslint.png)
-3. Зайдите во вкладку prettier и установите следующую конфигурацию:\
+3. Go to Prettier tab and set the following configuration:\
 ![](../img/prettier.png)
-4. Зайдите во вкладку stylelint и установите следующую конфигурацию:\
+4. Go to Stylelint tab and set the following configuration:\
 ![](../img/stylelint.png)
-5. Для ручного запуска eslint & prettier или stylelint используйте соотвествующую команду:
+5. For manual running of eslint & prettier or stylelint, use the corresponding command:
 ```
 npm run lint:fix
 npm run lint:styles:fix
 ```
 
 
-## Скрипт запуска приложения
-- Установка зависимостей: ```npm i```
-- Запуск в режиме разработчика: ```npm start```
-- Сборка приложения: ```npm run build```
+## Application Startup Scripts
+- Install dependencies: ```npm i```
+- Run in development mode: ```npm start```
+- Build application: ```npm run build```
 
-## Скрипт запуска StoryBook
-- Установка зависимостей: ```npm i```
-- Запуск в режиме разработчика: ```npm run storybook```
-- Сборка StoryBook: ```npm run build-storybook```
+## Storybook Startup Scripts
+- Install dependencies: ```npm i```
+- Run in development mode: ```npm run storybook```
+- Build Storybook: ```npm run build-storybook```
 
-#### Сборка проекта осуществляется через react-scripts (webpack)
+#### Project build is done through react-scripts (webpack)

@@ -1,136 +1,185 @@
 # DemonService
 
-## Описание проекта
+## Coursework Information
 
-### Предметная область
-#### Обзор
-Процент атеистов с каждым годом на планете только увеличивается, но немногие из людей догадываются о посмертной системе распределения, после прохождения которой наиболее вероятно ВАС ЖДЕТ АД.
+This project is a **Database Management Course** coursework assignment that demonstrates the implementation of a complex distributed system with database management principles. The application simulates an afterlife distribution system with multiple interconnected entities and business processes.
 
-Ведь после смерти все души вне зависимости от пола, сексуальных предпочтений, гендерной принадлежности и прочих не имеющих значения факторов попадают в самую длинную очередь на свете. В конце очереди их ждет комиссия системы распределения. Ее состав практически неизменен и обновляется исключительно божественными силами. Члены комиссии ничего не требуют за свою работу, кроме криков грешников, которых пытают черти.
+## Tech Stack
 
-Основной задачей системы распределения является подсчет количества грешных и праведных дел, совершенных за период последней жизни, для классификации души. После классификации душа либо отправляется назад в обычный мир (возможно, в другом виде), либо в ад, где она будет распределена между несколькими чертями.
+### Backend (Server)
+- **Java 11** - Programming language
+- **Spring Boot 2.7.4** - Application framework
+- **Spring Data JPA** - Data persistence layer
+- **Spring Data JDBC** - Database access
+- **PostgreSQL** - Primary database
+- **Liquibase** - Database migration tool
+- **Lombok** - Code generation
+- **ModelMapper** - Object mapping
+- **SpringDoc OpenAPI** - API documentation (Swagger)
+- **Gradle** - Build tool
+- **Docker & Docker Compose** - Containerization
 
-Каждый черт создан, чтобы унижать грешников, и имеет свою специализацию, которую получает при создании. Каждый грешник может стать чертом после определенного количества времени. После нескольких лет нахождения в аду черти получают право на реинкарнацию и отправляются в обычный мир.
+### Frontend (Client)
+- **React 18.2.0** - Frontend framework
+- **TypeScript** - Type-safe JavaScript
+- **Axios** - HTTP client
+- **React Router DOM** - Client-side routing
+- **CSS Modules** - Component-scoped styling
+- **Storybook** - Component documentation
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **Stylelint** - CSS linting
+- **Webpack** - Module bundler (via react-scripts)
 
-Население планеты пополняется за счет перераспределенных и новорожденных душ. Каждый год возможны три события: несколько душ умерли, несколько душ появились на свет, несколько душ были повторно перераспределены в обычный мир.
+### Development Tools
+- **Docker Compose** - Database containerization
+- **Gradle Wrapper** - Build automation
+- **npm** - Package management
+- **Git** - Version control
 
-#### Жизнь в обычном мире
-В обычном мире изначально проживает опреденное количество людей. Они умирают каждый год, тем самым уменьшая популяцию. Часть из умерших людей после прохождения очереди на распределение возвращаются в обычный мир.
+## Project Description
 
-Демографический кризис в обычном мире не возникает из-за того, что ежегодно каждая женщина в паре с мужчиной рожает людей.
+### Domain Overview
+The percentage of atheists on the planet increases every year, but few people realize the existence of a post-mortem distribution system through which they will most likely end up in HELL.
 
-При реинкарнации и рождении людям назначаются случайные характеристики, которые влияют на их дальнейшее поведение в аду и в обычном мире (в частности, пол).
+After death, all souls, regardless of gender, sexual preferences, gender identity, and other irrelevant factors, enter the longest queue in the world. At the end of the queue awaits a distribution system commission. Its composition is practically unchanged and is updated exclusively by divine forces. Commission members require nothing for their work except the screams of sinners being tortured by demons.
 
-Кроме того, ежегодно каждый живой человек совершает греховные и праведные дела, которые будут учитываться после его смерти при распределении (каждое праведное и греховное дело имеет свой вес).
+The main task of the distribution system is to count the number of sinful and righteous deeds performed during the last life period to classify the soul. After classification, the soul is either sent back to the ordinary world (possibly in a different form) or to hell, where it will be distributed among several demons.
 
-Если популяция людей слишком сильно разрастается, то божественные силы могут устроить геноцид по одной из характеристик людей (или по нескольким сразу).
+Each demon is created to humiliate sinners and has its own specialization, which it receives upon creation. Every sinner can become a demon after a certain amount of time. After several years in hell, demons gain the right to reincarnation and are sent to the ordinary world.
 
-#### Система распределения
-Система распределения состоит из двух элементов: очереди умерших людей и комиссии распределения. Божественные силы могут уменьшать и увеличивать количество распредилителей (при этом распределители получают случайные характеристики оценки греховности и праведности умершего).
+The planet's population is replenished through redistributed and newborn souls. Each year, three events are possible: several souls died, several souls were born, and several souls were redistributed back to the ordinary world.
 
-Каждый распределитель потребляет оры, создаваемые грешниками, которых пытают черти. Если распределителям не хватает оров, то у них происходит нервный срыв и вся очередь, вне зависимости от соотношения грехов и праведных дел, отправляется в АД.
+#### Life in the Ordinary World
+A certain number of people initially live in the ordinary world. They die every year, thereby reducing the population. Some of the deceased people return to the ordinary world after going through the distribution queue.
 
-Каждый год один распределитель оценивает одного умершего и отправляет его туда, куда посчитает нужным.
+A demographic crisis in the ordinary world does not occur because every year each woman in a pair with a man gives birth to people.
 
-Помимо прочего, каждый распределитель обладает уникальными навыками, которые и требуют оры грешников.
+During reincarnation and birth, people are assigned random characteristics that affect their further behavior in hell and the ordinary world (particularly gender).
 
-#### Жизнь в аду
-После попадания в ад, человек становится грешником и в зависимости от уровня его греховности его унижают n-е количество чертей. Если человек попал в ад из-за нервного срыва распределителей, то его унижает только один черт.
+Additionally, every year each living person commits sinful and righteous deeds that will be considered after their death during distribution (each righteous and sinful deed has its own weight).
 
-После проходения определеного периода времени часть грешников становятся чертями, а часть чертей реинкарнируют в обычный мир.
+If the human population grows too much, divine forces can organize genocide based on one or several human characteristics.
 
-Каждый унижаемый грешник производит оры, которыми питаются распределители. Чем больше чертей унижают грешника, тем больше оров он производит.
+#### Distribution System
+The distribution system consists of two elements: a queue of deceased people and a distribution commission. Divine forces can decrease and increase the number of distributors (while distributors receive random characteristics for evaluating the sinfulness and righteousness of the deceased).
 
-Если божественная сущность считает чертей, которые должны быть реинкарнированны в ближайшее время, достойными, то он может их досрочно амнистировать и отправить в обычный мир.
+Each distributor consumes "ory" (energy) created by sinners being tortured by demons. If distributors don't have enough ory, they have a nervous breakdown, and the entire queue, regardless of the ratio of sins to righteous deeds, is sent to HELL.
+
+Each year, one distributor evaluates one deceased person and sends them where they deem appropriate.
+
+Additionally, each distributor possesses unique skills that require sinner ory.
+
+#### Life in Hell
+After entering hell, a person becomes a sinner and, depending on their level of sinfulness, is humiliated by n-number of demons. If a person ended up in hell due to distributor nervous breakdown, only one demon humiliates them.
+
+After a certain period, some sinners become demons, and some demons reincarnate into the ordinary world.
+
+Each humiliated sinner produces ory that feeds the distributors. The more demons humiliate a sinner, the more ory they produce.
+
+If a divine entity considers demons who should be reincarnated soon as worthy, they can grant them early amnesty and send them to the ordinary world.
 
 
 
-### Бизнес-процессы, реализуемые приложением
+### Business Processes Implemented by the Application
 
-1. Бизнес-процессы божественных сил:
-   1. увеличение количества распределителей
-   2. уменьшение количества распределителей
-   3. проведение геноцида в обычном мире
-   4. амнистирование чертей в аду
-2. Бизнес-процессы в обычном мире:
-   1. смерть случайных людей
-   2. рождение людей от пары женщины и мужчины
-   3. реинкарнация людей из ада или из системы распределения
-   4. совершение греховных и праведных дел живыми людьми
-3. Бизнес-процессы в системе распределения:
-   1. распределение умерших в зависимости от соотношения их греховности и праведности
-   2. распределение умерших в ад при стрессе распределителей
-   3. потребление распределителями оров грешников
-4. Бизнес-процессы в аду:
-   1. становление человека грешником
-   2. распределения чертей на грешника
-   3. становление грешника чертом
-   4. перераспределение черта на реинкарнацию
-   5. производство грешниками оров
+1. **Divine Forces Business Processes:**
+   - Increasing the number of distributors
+   - Decreasing the number of distributors
+   - Conducting genocide in the ordinary world
+   - Granting amnesty to demons in hell
 
-### Структура проекта
+2. **Ordinary World Business Processes:**
+   - Death of random people
+   - Birth of people from woman-man pairs
+   - Reincarnation of people from hell or the distribution system
+   - Committing sinful and righteous deeds by living people
 
-- ***server*** - серверная часть приложения
-  - *resources* - мета-информация для запуска проекта
-  - *config* - конфигурация фильтров
-  - *controllers* - контроллеры MVC
-  - *dto* - структуры данных, пересылаемые по HTTP
-  - *entity* - структуры данных, описывающие сущности БД
-  - *exceptions* - кастомные исключения
-  - *repository* - JPA репозитории
-  - *service* - сервисный слой приложения
-- ***client*** - директория, содержащая клиенсткую часть приложения 
-  - *public* - статика, собираемая в React приложение
-  - *api* - модуль, содержащий взаимодействие с сервисным API
-  - *components* - React компоненты, используемые в приложении
-  - *context* - описание контекста React-приложения
+3. **Distribution System Business Processes:**
+   - Distribution of deceased based on their sinfulness-to-righteousness ratio
+   - Distribution of deceased to hell during distributor stress
+   - Consumption of sinner ory by distributors
 
-### Структура API
+4. **Hell Business Processes:**
+   - Becoming a sinner
+   - Assignment of demons to sinners
+   - Becoming a demon from sinner
+   - Redistribution of demons for reincarnation
+   - Production of ory by sinners
 
-### Изначальная структура БД
+### Project Structure
+
+- ***server*** - Server-side application
+  - *resources* - Meta-information for project startup
+  - *config* - Filter configuration
+  - *controllers* - MVC controllers
+  - *dto* - Data structures transmitted via HTTP
+  - *entity* - Data structures describing database entities
+  - *exceptions* - Custom exceptions
+  - *repository* - JPA repositories
+  - *service* - Application service layer
+  - *interfaces* - Service interfaces
+- ***client*** - Directory containing the client-side application
+  - *public* - Static files compiled into React application
+  - *api* - Module containing interaction with service API
+  - *components* - React components used in the application
+  - *context* - React application context description
+  - *atom* - Atomic components
+  - *panels* - Application pages
+  - *types* - Types for API and internal application
+  - *styles* - Global styles
+
+### API Structure
+
+### Initial Database Structure
 ![](./img/db.png)
 
-### Скрипт запуска
-```
+### Startup Script
+```bash
+# Start the database
 cd ./server
 docker-compose up
-./gradlew bootJar
 
+# Build and run the server
+./gradlew bootRun
+
+# Start the client (in a new terminal)
 cd ../client
 npm i
 npm start
 ```
 
-## Планируемые изменения
+## Planned Changes
 
-### Этап 1. Рефакторинг клиентской части приложение 
-1. Будет добавлен TypeScript в компоненты приложения
-2. Будет добавлен eslint и prettier для создания единого code-style
-3. Будет добавлен stylelint для создания единого code-style в css
-4. Будет изменена структура проекта и добавлен именованный export:
-   1. *components* - умные компоненты (составлены из атомарных)
-   2. *panels* - страницы приложения
-   3. *atom* - атомарные компоненты
-   4. *api* - взаимодействие с API серверной части 
-   5. *types* - типы для API и внутри приложения
-   6. *context* - контекст React приложения
-6. Будет изменена сетка футера приложения\
+### Stage 1. Client-side Application Refactoring ✅
+1. ✅ TypeScript added to application components
+2. ✅ ESLint and Prettier added for unified code style
+3. ✅ Stylelint added for unified CSS code style
+4. ✅ Project structure changed and named exports added:
+   1. *components* - Smart components (composed of atomic ones)
+   2. *panels* - Application pages
+   3. *atom* - Atomic components
+   4. *api* - Interaction with server-side API
+   5. *types* - Types for API and internal application
+   6. *context* - React application context
+5. ✅ Application footer grid changed
 ![](./img/footer.png)
-7. Будет удалено лишнее логирование
-### Этап 2. Рефакторинг серверной части приложения
-1. API будет приведен в соотвествие с REST Name Convention
-2. Будет изменены файлы контроллеров
-3. Будет изменена клиентская часть в соотвествии с новым API
-4. Будет изменена БД:
-   1. Будет удалена сущность DemonSpecialization
-   2. Будет изменена сущность Demon
-5. Будет изменена политика CORS на более безопасную
-6. Будут добавлены интерфейсы для сервисов
-7. Конфигурация приложения будет переведена на yaml
-8. Будет добавлена сортировка дистрибьютеров на клиенте
+6. ✅ Unnecessary logging removed
 
-### Этап 3. Создание документации приложения
-1. Будет добавлен Swagger UI для API
-2. Будет добавлен Storybook для атомарных компонентов, используемых во frontend-части
-3. Readme-файлы каждой из частей приложения будут заполнены корректной информацией
-4. Будут добавлены комментарии к основным частям приложения
+### Stage 2. Server-side Application Refactoring ✅
+1. ✅ API brought into compliance with REST Name Convention
+2. ✅ Controller files changed
+3. ✅ Client-side changed according to new API
+4. ✅ Database changed:
+   1. ✅ DemonSpecialization entity removed
+   2. ✅ Demon entity changed
+5. ✅ CORS policy changed to more secure
+6. ✅ Interfaces added for services
+7. ✅ Application configuration translated to YAML
+8. ✅ Distributor sorting added on client
+
+### Stage 3. Application Documentation Creation ✅
+1. ✅ Swagger UI added for API
+2. ✅ Storybook added for atomic components used in frontend
+3. ✅ README files for each part of the application filled with correct information
+4. ✅ Comments added to main parts of the application
